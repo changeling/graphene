@@ -59,7 +59,7 @@ When we send a **Query** requesting only one **Field**, ``hello``, and specify a
 Requirements
 ~~~~~~~~~~~~
 
--  Python (2.7, 3.4, 3.5, 3.6, pypy)
+-  Python (3.6+, pypy)
 -  Graphene (2.0)
 
 Project setup
@@ -76,22 +76,24 @@ In Graphene, we can define a simple schema using the following code:
 
 .. code:: python
 
-    import graphene
+from graphene import ObjectType, Schema, String
 
-    class Query(graphene.ObjectType):
-        # this defines a Field `hello` in our Schema with a single Argument `name`
-        hello = graphene.String(name=graphene.String(default_value="stranger"))
-        goodbye = graphene.String()
 
-        # our Resolver method takes the GraphQL context (root, info) as well as
-        # Argument (name) for the Field and returns data for the query Response
-        def resolve_hello(root, info, name):
-            return f'Hello {name}!'
+class Query(ObjectType):
+    # this defines a Field `hello` in our Schema with a single Argument `name`
+    hello = String(name=String(default_value="stranger"))
+    goodbye = String()
 
-        def resolve_goodbye(root, info):
-            return 'See ya!'
+    # our Resolver method takes the GraphQL context (root, info) as well as
+    # Argument (name) for the Field and returns data for the query Response
+    def resolve_hello(root, info, name):
+        return f"Hello {name}!"
 
-    schema = graphene.Schema(query=Query)
+    def resolve_goodbye(root, info):
+        return "See ya!"
+
+
+schema = Schema(query=Query)
 
 
 A GraphQL **Schema** describes each **Field** in the data model provided by the server using scalar types like *String*, *Int* and *Enum* and compound types like *List* and *Object*. For more details refer to the Graphene :ref:`TypesReference`.

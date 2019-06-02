@@ -54,7 +54,17 @@ In this case, we need to use the ``types`` argument when creating the Schema.
         types=[SomeExtraObjectType, ]
     )
 
-.. _SchemaAutoCamelCase:
+
+Querying
+--------
+
+To query a schema, call the ``execute`` method on it.
+
+
+.. code:: python
+
+    my_schema.execute("{ lastName }")
+
 
 Auto CamelCase field names
 --------------------------
@@ -67,9 +77,9 @@ For example with the ObjectType
 
 .. code:: python
 
-    class Person(graphene.ObjectType):
-        last_name = graphene.String()
-        other_name = graphene.String(name='_other_Name')
+    class Person(ObjectType):
+        last_name = String()
+        other_name = String(name="_other_Name")
 
 the ``last_name`` field name is converted to ``lastName``.
 

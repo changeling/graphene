@@ -1,5 +1,4 @@
 import os
-import
 import sphinx_graphene_theme
 
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"

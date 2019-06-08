@@ -86,12 +86,13 @@ If we have a schema with Person type and one field on the root query.
         first_name = String()
         last_name = String()
 
-        def resolve_full_name(parent, info):
-            return f'{parent.first_name} {parent.last_name}'
 
     class Query(ObjectType):
         me = Field(Person)
         best_friend = Field(Person)
+
+        def resolve_full_name(parent, info):
+            return f'{parent.first_name} {parent.last_name}'
 
         def resolve_me(parent, info):
             # returns an object that represents a Person
@@ -357,17 +358,17 @@ Field camelcasing
 
 Graphene automatically camelcases fields on *ObjectType* from ``field_name`` to ``fieldName`` to conform with GraphQL standards. See :ref:`SchemaAutoCamelCase` for more information.
 
-*ObjectType* Configuration - Meta class
+*ObjectType* Configuration - Class Arguments
 ---------------------------------------
 
-Graphene uses a Meta inner class on *ObjectType* to set different options.
+Graphene uses class arguments on *ObjectType* to set different options.
 
 GraphQL type name
 ~~~~~~~~~~~~~~~~~
 
 By default the type name in the GraphQL schema will be the same as the class name
 that defines the ``ObjectType``. This can be changed by setting the ``name``
-property on the ``Meta`` class:
+property as a class argument:
 
 .. code:: python
 
@@ -377,31 +378,27 @@ property on the ``Meta`` class:
 GraphQL Description
 ~~~~~~~~~~~~~~~~~~~
 
-The schema description of an *ObjectType* can be set as a docstring on the Python object or on the Meta inner class.
+The schema description of an *ObjectType* can be set as a docstring on the Python object or as a class argument.
 
 .. code:: python
 
-    class MyGraphQlSong(graphene.ObjectType):
+    class MyGraphQlSong(ObjectType, description = 'But if we set the description as a class argument, this value is used instead'):
         ''' We can set the schema description for an Object Type here on a docstring '''
-        class Meta:
-            description = 'But if we set the description in Meta, this value is used instead'
+        pass
 
 Interfaces & Possible Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Setting ``interfaces`` in Meta inner class specifies the GraphQL Interfaces that this Object implements.
+Setting ``interfaces`` as class arguments specifies the GraphQL Interfaces that this Object implements.
 
 Providing ``possible_types`` helps Graphene resolve ambiguous types such as interfaces or Unions.
 
 See :ref:`Interfaces` for more information.
 
 .. code:: python
-
     Song = namedtuple('Song', ('title', 'artist'))
 
-    class MyGraphQlSong(graphene.ObjectType):
-        class Meta:
-            interfaces = (graphene.Node, )
-            possible_types = (Song, )
+    class MyGraphQlSong(ObjectType, interfaces=(Node,), possible_types=(Song,)):
+        pass
 
 .. _Interface: /docs/interfaces/

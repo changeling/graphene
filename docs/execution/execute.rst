@@ -73,13 +73,13 @@ Value used for :ref:`ResolverRootArgument` in root queries and mutations can be 
 
 .. code:: python
 
-    class Query(graphene.ObjectType):
-        me = graphene.Field(User)
+    class Query(ObjectType):
+        me = Field(User)
 
         def resolve_user(root, info):
             return get_user_by_id(root.id)
 
-    schema = graphene.Schema(Query)
+    schema = Schema(Query)
     user_root = User(id=12, name='bob'}
     result = schema.execute(
         '''
@@ -101,13 +101,13 @@ If there are multiple operations defined in a query string, ``operation_name`` s
 
 .. code:: python
 
-    class Query(graphene.ObjectType):
-        me = graphene.Field(User)
+    class Query(ObjectType):
+        me = Field(User)
 
         def resolve_user(root, info):
             return get_user_by_id(12)
 
-    schema = graphene.Schema(Query)
+    schema = Schema(Query)
     query_string = '''
         query getUserWithFirstName {
             user {

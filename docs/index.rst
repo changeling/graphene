@@ -13,8 +13,6 @@ Contents:
    testing/index
    api/index
 
-.. _Integrations:
-
 Integrations
 ------------
 

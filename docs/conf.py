@@ -1,5 +1,6 @@
 import os
-import sphinx_graphene_theme
+
+# import sphinx_graphene_theme
 
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
@@ -21,9 +22,10 @@ on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(".."))
 
 # -- General configuration ------------------------------------------------
 
@@ -40,6 +42,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
+    "sphinx.ext.napoleon",
 ]
 if not on_rtd:
     extensions += ["sphinx.ext.githubpages"]
@@ -440,6 +443,23 @@ epub_exclude_files = ["search.html"]
 #
 # epub_use_index = True
 
+autodoc_mock_imports = [
+    "graphql",
+    "graphql.language",
+    "graphql.language.ast",
+    "graphql.execution",
+    "graphql.execution.base",
+    "graphql.type",
+    "graphql.type.directives",
+    "graphql.type.introspection",
+    "graphql.type.typemap",
+    "graphql.utils",
+    "graphql.utils.introspection_query",
+    "graphql.utils.schema_printer",
+    "graphql.execution.executor",
+    "aniso8601",
+    "graphql_relay",
+]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
@@ -454,4 +474,5 @@ intersphinx_mapping = {
         None,
     ),
     "graphene_gae": ("http://docs.graphene-python.org/projects/gae/en/latest/", None),
+    "graphql": ("https://graphql.readthedocs.io/en/latest/", None),
 }
